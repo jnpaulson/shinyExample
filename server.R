@@ -6,7 +6,7 @@ downloadNotInstalled<-function(x){
       }
     }
 }
-requiredPackages = c("shiny","vegan","matrixStats","RColorBrewer")
+requiredPackages = c("shiny","vegan","matrixStats","RColorBrewer","gplots")
 downloadNotInstalled(requiredPackages)
 
 load("mousedata.rda")
@@ -25,7 +25,8 @@ shinyServer(function(input, output) {
     hc = hclust(vegdist(mat2,method=input$distanceMethod))
     otuOrder = hc$order
     cc = cc[otuOrder, otuOrder]
-    image(t(cc),col = colorRampPalette(brewer.pal(9, "RdBu"))(50))
+    heatmap.2(t(cc),trace="none",dendrogram = "none",
+    col = colorRampPalette(brewer.pal(9, "RdBu"))(50),Rowv=FALSE,Colv=FALSE)
   })
 
 })
