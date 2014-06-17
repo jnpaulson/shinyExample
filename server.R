@@ -25,8 +25,19 @@ shinyServer(function(input, output) {
     hc = hclust(vegdist(mat2,method=input$distanceMethod))
     otuOrder = hc$order
     cc = cc[otuOrder, otuOrder]
+    
+    keysize = ifelse(input$hist,yes=1.5,no=.5) 
+    if(input$hist){
+      offsetRow=.5
+      offsetCol=.5
+    } else {
+      offsetRow=0
+      offsetCol=0
+    }
+    
     heatmap.2(t(cc),trace="none",dendrogram = "none",
-    col = colorRampPalette(brewer.pal(9, "RdBu"))(50),Rowv=FALSE,Colv=FALSE)
+    col = colorRampPalette(brewer.pal(9, "RdBu"))(50),Rowv=FALSE,Colv=FALSE,
+    key=input$hist,keysize=keysize,offsetRow=offsetRow,offsetCol=offsetCol)
   })
 
 })
