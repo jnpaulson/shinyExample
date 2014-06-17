@@ -1,3 +1,14 @@
+downloadNotInstalled<-function(x){
+    for(i in x){
+      if(!require(i,character.only=TRUE)){
+        install.packages(i,repos="http://cran.r-project.org")
+        library(i,character.only=TRUE)
+      }
+    }
+}
+requiredPackages = c("shiny","vegan","matrixStats","RColorBrewer")
+downloadNotInstalled(requiredPackages)
+
 load("mousedata.rda")
 
 shinyUI(pageWithSidebar(
